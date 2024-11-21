@@ -1,0 +1,9 @@
+spacy
+nltk
+numpy
+gensim
+sentence_transformers
+torch
+transformers
+scikit-learn
+google-generativeai

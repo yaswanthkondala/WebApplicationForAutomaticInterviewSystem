@@ -1,0 +1,102 @@
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f4f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #333;
+  }
+
+  .container {
+    max-width: 850px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #007bff;
+    position: relative;
+  }
+
+  .start-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+  }
+
+  .start-btn:hover {
+    background-color: #0056b3;
+  }
+
+  /* Webcam styling */
+  .video {
+    position: absolute;
+    top: 20px;
+    right: -5cm;
+    width: 150px;
+    height: 120px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+  }
+
+  /* Timer styling */
+  .timer {
+    font-size: 18px;
+    color: blue;
+    font-weight: bold;
+  }
+
+  /* Expression Page styling */
+  .expression-page {
+    display: none; /* Hidden initially */
+    text-align: center;
+  }
+
+  .expression-page h2 {
+    color: #28a745;
+    font-size: 26px;
+  }
+
+  .stars {
+    display: inline-block;
+    font-size: 30px;
+    color: gold;
+    cursor: pointer;
+  }
+
+  .stars span {
+    font-size: 40px;
+  }
+
+  .stars input {
+    display: none; /* Hide the radio input */
+  }
+
+  .stars label {
+    font-size: 40px;
+    color: lightgray;
+    cursor: pointer;
+  }
+
+  .stars input:checked ~ label {
+    color: gold;
+  }
+
+  .stars input:checked + label ~ label {
+    color: lightgray;
+  }
+
+  .submit-feedback-btn {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+
+  .submit-feedback-btn:hover {
+    background-color: #218838;
+  }

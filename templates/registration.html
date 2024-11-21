@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registration Form</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/registration.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="navbar" id="navbar1"></div>
+    <div class="container">
+      <h2>Registration Form</h2>
+      <form action="" method="post">
+        <!-- Existing Fields -->
+        <div class="input-field">
+          <i class="fa fa-user"></i>
+          <input
+            type="text"
+            name="first_name"
+            id="firstname"
+            placeholder="First Name"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-user"></i>
+          <input
+            type="text"
+            name="last_name"
+            id="lastname"
+            placeholder="Last Name"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-envelope"></i>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            placeholder="Password"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-lock"></i>
+          <input
+            type="password"
+            name="confirm_password"
+            id="confirmpass"
+            placeholder="Re-type Password"
+            required
+          />
+        </div>
+
+        <!-- New Fields -->
+        <div class="input-field">
+          <i class="fa fa-university"></i>
+          <input
+            type="text"
+            name="college_name"
+            id="college"
+            placeholder="College Name"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-id-card"></i>
+          <input
+            type="text"
+            name="university_reg_no"
+            id="userid"
+            placeholder="University Registration Number"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-phone"></i>
+          <input
+            type="text"
+            name="phone"
+            id="phone_number"
+            placeholder="Phone Number"
+            required
+          />
+        </div>
+        <!-- <div class="input-field">
+        <i class="fa fa-book"></i>
+        <input type="text" name="branch" placeholder="Branch" required />
+      </div> -->
+        <div class="input-field select-option">
+          <i class="fa fa-book"></i>
+          <select name="branch" id="branch" required>
+            <option value="">Select Branch</option>
+            <option>Computer Science enginering</option>
+            <option>Information Technology</option>
+            <option>artificial intelligence and data science</option>
+            <option>Artificial intelligence and machine learning</option>
+          </select>
+          <div class="select-arrow"></div>
+        </div>
+        <div class="input-field">
+          <i class="fa fa-calendar"></i>
+          <input
+            type="number"
+            name="year_of_pass"
+            id="yearofpass"
+            placeholder="Year of Pass"
+            required
+          />
+        </div>
+        <div class="input-field select-option">
+          <select name="job_role" id="jobrole">
+            <option value="">Select Job Role</option>
+            <option>fullstack</option>
+            <option>frontend developer</option>
+            <option>data analyst</option>
+            <option>data scientist</option>
+            <option>devops engineer</option>
+            <option>backend developer</option>
+            <option>associative software engineer</option>
+          </select>
+          <div class="select-arrow"></div>
+        </div>
+        <div class="input-field">
+          <i class="fa fa-briefcase"></i>
+          <input
+            type="number"
+            name="experience"
+            id="experience"
+            placeholder="Experience (e.g., 2 years)"
+            required
+          />
+        </div>
+        <div class="input-field">
+          <i class="fa fa-calendar"></i>
+          <input
+            type="date"
+            name="dob"
+            id="dateofbirth"
+            placeholder="Date of Birth"
+            required
+          />
+        </div>
+
+        <button
+          class="button"
+          type="button"
+          value="Register"
+          onclick="submitForm()"
+          id="register"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+  </body>
+</html>

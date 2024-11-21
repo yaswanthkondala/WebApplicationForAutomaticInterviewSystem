@@ -1,0 +1,114 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative; /* Added for positioning the webcam */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-details {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.bot-container {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#avathar {
+    border-radius: 50%;
+    transition: transform 0.3s;
+    margin-bottom: 15px;
+}
+
+#avathar:hover {
+    transform: scale(1.05);
+}
+
+#botSpeech {
+    margin-top: 15px;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.controls button {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.controls button:hover {
+    opacity: 0.8;
+}
+
+.controls button:nth-child(1) {
+    background-color: #6c757d;
+    color: white;
+}
+
+.controls button:nth-child(2) {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.controls button:nth-child(3) {
+    background-color: #28a745;
+    color: white;
+}
+
+.webcam-container {
+    
+    
+    
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: absolute; /* Position it absolutely */
+    top: 80px; /* Distance from the top */
+    right: 2px; /* Distance from the right */
+    width: 200px; /* Set a width */
+}
+
+.timer {
+    margin-top: 10px;
+    font-size: 1.5em;
+    color: #e63946;
+    text-align: center; /* Center the timer text */
+}
+
+textarea {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    width: 100%;
+    resize: none;
+    font-size: 1em;
+}

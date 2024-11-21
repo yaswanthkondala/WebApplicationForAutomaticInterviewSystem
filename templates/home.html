@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Interview Preparation Platform</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/home.css') }}"
+    />
+    <script>
+      const stylesheetUrl =
+        "{{ url_for('static', filename='css/navbarStyle.css') }}";
+    </script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <div class="navbar" id="navbar"></div>
+
+    <!-- Content -->
+    <div class="content">
+      <h1>Welcome to Our Online Interview Platform</h1>
+      <p>
+        Get ready for your next big interview with AI-powered tools and
+        resources.
+      </p>
+
+      <!-- Large Image with Sign Up Button -->
+      <div class="image-container">
+        <img
+          src="https://media.istockphoto.com/id/1830163120/photo/group-of-computer-programmers-talking-while-working-at-it-office.jpg?s=1024x1024&w=is&k=20&c=46TtSPYzBgwbsc5XkWC6Hx5VMwaPiSR5kWLfw0_tVBQ="
+          alt="Interview Preparation"
+        />
+        <button
+          class="signup-button"
+          type="button"
+          id="startexam"
+          onclick="validate()"
+        >
+          start Exam
+        </button>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/validation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/navbar.js') }}"></script>
+  </body>
+</html>

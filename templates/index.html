@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Exam with Webcam and Microphone</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 850px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #007BFF;
+            position: relative;
+        }
+
+        /* Instructions Page */
+        .instructions-page {
+            text-align: center;
+        }
+
+        .instructions-page h2 {
+            color: #007BFF;
+            font-size: 28px;
+        }
+
+        .instructions-page ul {
+            text-align: left;
+            margin-left: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .start-btn {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Webcam styling */
+        video {
+            position: absolute;
+            top: 20px;
+            right: -5cm;
+            width: 150px;
+            height: 120px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+        }
+
+        /* Timer styling */
+        .timer {
+            font-size: 18px;
+            color:;
+            font-weight: bold;
+        }
+
+        /* Expression Page styling */
+        .expression-page {
+            display: none; /* Hidden initially */
+            text-align: center;
+        }
+
+        .expression-page h2 {
+            color: #28a745;
+            font-size: 26px;
+        }
+
+        .stars {
+            display: inline-block;
+            font-size: 30px;
+            color: gold;
+            cursor: pointer;
+        }
+
+        .stars span {
+            font-size: 40px;
+        }
+
+        .stars input {
+            display: none; /* Hide the radio input */
+        }
+
+        .stars label {
+            font-size: 40px;
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        .stars input:checked ~ label {
+            color: gold;
+        }
+
+        .stars input:checked + label ~ label {
+            color: lightgray;
+        }
+
+        .submit-feedback-btn {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            font-size: 18px;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-feedback-btn:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Instructions Page -->
+    <div class="instructions-page" id="instructionsPage">
+        <h2>Welcome to the Online Exam</h2>
+        <p>Please read the instructions carefully before starting the exam:</p>
+        <ul>
+            <li><strong>Webcam and Microphone:</strong> Your webcam and microphone will be used throughout the exam to monitor you.</li>
+            <li><strong>Time Limit:</strong> You have a limited amount of time to answer each question. Make sure to submit your answer before the time runs out.</li>
+            <li><strong>Voice-to-Text:</strong> You can answer the questions by typing or using the voice-to-text feature through the microphone.</li>
+            <li><strong>Number of Questions:</strong> This exam contains 5 questions. Answer all questions to complete the exam.</li>
+            <li><strong>Final Score:</strong> Your final score will be displayed after you submit the exam, along with accuracy.</li>
+        </ul>
+        <button class="btn start-btn" id="startExam">Start Exam</button>
+    </div>
+
+    <!-- Exam Content (hidden until start) -->
+    <div class="exam-content" id="examContent" style="display: none;">
+        <div class="row">
+            <!-- Left Sidebar for details -->
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Question ID:</strong> <span id="questionID">1</span></p>
+                        <p><strong>Difficulty:</strong> <span id="questionDifficulty">Easy</span></p>
+                        <p><strong>Question Count:</strong> <span id="currentQuestionCount">1</span> / <span id="totalQuestionCount">5</span></p>
+                        <p><strong>Total Time:</strong> <span id="totalTime">0</span> seconds</p>
+
+                        <!-- User details -->
+                        <div class="mt-4">
+                            <p><strong>User Name:</strong> John Doe</p>
+                            <p><strong>User ID:</strong> 12345</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Section -->
+            <div class="col-md-8">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <!-- Question box -->
+                        <div class="mb-3">
+                            <h5 class="question" id="questionText">Loading question...</h5>
+                        </div>
+
+                        <!-- Answer input -->
+                        <div class="input-container mb-3">
+                            <input type="text" class="form-control" id="answerInput" placeholder="Enter your answer here" />
+                        </div>
+
+                        <!-- Timer and Submit Answer -->
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <button class="btn btn-success" id="submitAnswer">Submit Answer</button>
+                            <button class="btn btn-primary" id="nextQuestion" disabled>Next Question</button>
+                            <div class="timer" id="timer">Time left: <span id="time">30</span> seconds</div>
+                        </div>
+
+                        <!-- Microphone Controls -->
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-info me-2" id="startMic">Start Mic (Voice-to-Text)</button>
+                            <button class="btn btn-secondary" id="stopMic" disabled>Stop Mic</button>
+                            <div class="mic-status ms-3" id="micStatus">Mic is off</div>
+                        </div>
+
+                        <!-- Submit Exam Button -->
+                        <button class="btn btn-danger mt-3" id="submitExam">Submit Exam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Webcam video element -->
+        <video id="webcam" autoplay></video>
+    </div>
+
+    <!-- Expression Page (hidden until exam is finished) -->
+    <div class="expression-page" id="expressionPage">
+        <h2>Thank you for completing the exam!</h2>
+        <p>Please rate your experience with the exam:</p>
+
+        <!-- Star Rating -->
+        <div class="stars">
+            <input type="radio" id="star5" name="rating" value="5"><label for="star5">&#9733;</label>
+            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
+            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
+            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
+            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
+        </div>
+
+        <!-- Submit Feedback Button -->
+        <button class="btn submit-feedback-btn" id="submitFeedback">Submit Feedback</button>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const questions = [
+        {"id": 1, "question": "What is Java and how does it differ from other programming languages?", "answer": "Java is a high-level programming language, known for its portability.", "difficulty": "Easy"},
+        {"id": 2, "question": "What is the difference between JDK, JRE, and JVM?", "answer": "JDK is the Java Development Kit, JRE is the Java Runtime Environment, and JVM is the Java Virtual Machine.", "difficulty": "Medium"},
+        {"id": 3, "question": "Explain the concept of OOP.", "answer": "OOP is a programming paradigm based on objects.", "difficulty": "Medium"},
+        {"id": 4, "question": "What are the main principles of OOP?", "answer": "Encapsulation, Inheritance, Polymorphism, and Abstraction.", "difficulty": "Hard"},
+        {"id": 5, "question": "What is a class and an object in Java?", "answer": "A class is a blueprint, and an object is an instance of a class.", "difficulty": "Easy"}
+    ];
+
+    let currentQuestionIndex = 0;
+    let correctAnswers = 0;  // Variable to hold correct score
+    let totalAnswers = 0;    // Total questions answered
+    let totalTime = 0;
+    let timeLeft = 30;
+    let timerInterval, totalExamTimer, videoStream, recognition;
+
+    // Initialize total question count
+    document.getElementById('totalQuestionCount').textContent = questions.length;
+
+    function startTotalExamTimer() {
+        totalExamTimer = setInterval(() => {
+            totalTime++;
+            document.getElementById('totalTime').textContent = totalTime;
+        }, 1000);
+    }
+
+    function loadQuestion() {
+        if (currentQuestionIndex >= questions.length) {
+            showResults();
+            return;
+        }
+
+        const currentQuestion = questions[currentQuestionIndex];
+        document.getElementById("questionID").textContent = currentQuestion.id;
+        document.getElementById("questionDifficulty").textContent = currentQuestion.difficulty;
+        document.getElementById("currentQuestionCount").textContent = currentQuestionIndex + 1;
+        document.getElementById("questionText").textContent = currentQuestion.question;
+        document.getElementById("answerInput").value = "";
+        document.getElementById("nextQuestion").disabled = true;
+        resetTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            document.getElementById("time").textContent = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                document.getElementById("submitAnswer").click();
+            }
+        }, 1000);
+    }
+
+    function resetTimer() {
+        clearInterval(timerInterval);
+        timeLeft = 30;
+        document.getElementById("time").textContent = timeLeft;
+        startTimer();
+    }
+
+    document.getElementById("submitAnswer").addEventListener("click", () => {
+        const userAnswer = document.getElementById("answerInput").value.trim();
+        const correctAnswer = questions[currentQuestionIndex].answer.trim().toLowerCase();
+
+        totalAnswers++;  // Increment total answers
+
+        // Check if the user's answer matches the correct answer
+        if (userAnswer.toLowerCase() === correctAnswer) {
+            correctAnswers++;  // Increment the score if the answer is correct
+        }
+
+        currentQuestionIndex++;
+        document.getElementById("nextQuestion").disabled = false;
+        clearInterval(timerInterval);
+    });
+
+    document.getElementById("nextQuestion").addEventListener("click", loadQuestion);
+
+    function showResults() {
+        const accuracy = ((correctAnswers / totalAnswers) * 100).toFixed(2);  // Calculate accuracy
+        alert(Exam complete!\nYour score is: ${correctAnswers}/${totalAnswers}\nAccuracy: ${accuracy}%);
+        clearInterval(totalExamTimer);
+
+        // Stop the webcam and microphone automatically
+        if (videoStream) {
+            videoStream.getTracks().forEach(track => track.stop());
+            document.getElementById("webcam").srcObject = null;
+        }
+
+        stopSpeechRecognition();
+
+        // Display the Expression Page
+        document.getElementById("examContent").style.display = "none";
+        document.getElementById("expressionPage").style.display = "block";
+    }
+
+    document.getElementById("submitExam").addEventListener("click", showResults);
+
+    async function startWebcam() {
+        try {
+            videoStream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const webcamElement = document.getElementById('webcam');
+            webcamElement.srcObject = videoStream;
+        } catch (err) {
+            console.error("Error accessing webcam: ", err);
+        }
+    }
+
+    function startSpeechRecognition() {
+        if ('webkitSpeechRecognition' in window) {
+            recognition = new webkitSpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onresult = function (event) {
+                const spokenText = event.results[0][0].transcript;
+                document.getElementById("answerInput").value = spokenText;
+                verifyAnswer(spokenText);
+            };
+
+            recognition.start();
+            document.getElementById('micStatus').textContent = 'Mic is on (Listening...)';
+            document.getElementById('startMic').disabled = true;
+            document.getElementById('stopMic').disabled = false;
+        } else {
+            alert('Speech recognition not supported in your browser.');
+        }
+    }
+
+    function stopSpeechRecognition() {
+        if (recognition) {
+            recognition.stop();
+            document.getElementById('micStatus').textContent = 'Mic is off';
+            document.getElementById('startMic').disabled = false;
+            document.getElementById('stopMic').disabled = true;
+        }
+    }
+
+    function verifyAnswer(spokenText) {
+        const correctAnswer = questions[currentQuestionIndex].answer.trim().toLowerCase();
+        totalAnswers++;  // Increment total answers when using speech
+
+        if (spokenText.trim().toLowerCase() === correctAnswer) {
+            correctAnswers++;  // Increment the score if the answer is correct
+        }
+        document.getElementById("nextQuestion").disabled = false;
+    }
+
+    document.getElementById('startMic').addEventListener('click', startSpeechRecognition);
+    document.getElementById('stopMic').addEventListener('click', stopSpeechRecognition);
+
+    document.getElementById("startExam").addEventListener("click", () => {
+        document.getElementById("instructionsPage").style.display = "none";
+        document.getElementById("examContent").style.display = "block";
+        startTotalExamTimer();  // Start the total exam timer
+        startWebcam();          // Start webcam
+        loadQuestion();         // Load the first question
+    });
+
+    // Feedback Submission
+    document.getElementById("submitFeedback").addEventListener("click", () => {
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if (selectedRating) {
+            const ratingValue = selectedRating.value;
+            alert(Thank you for your feedback! You rated the exam ${ratingValue} star(s).);
+        } else {
+            alert("Please select a star rating before submitting your feedback.");
+        }
+    });
+
+</script>
+</body>
+</html>

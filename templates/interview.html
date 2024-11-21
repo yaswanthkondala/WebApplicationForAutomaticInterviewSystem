@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time Interview System</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/interview.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="header">
+        <h1>Real-Time Interview System</h1>
+      </div>
+
+      <div class="row">
+        <div class="col-md-4 user-details">
+          <div><strong>Name:</strong> <span id="name"></span></div>
+          <div><strong>subject:</strong> <span id="subject"></span></div>
+          <div><strong>Difficulty:</strong> <span id="difficulty"></span></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-8">
+          <div class="bot-container">
+            <img
+              id="avathar"
+              src="{{ url_for('static', filename='images/avathar.png') }}"
+              data-png="{{ url_for('static', filename='images/avathar.png') }}"
+              data-gif="{{ url_for('static', filename='images/avathar.gif') }}"
+              alt="img"
+              height="300px"
+              width="300px"
+            />
+            <!-- <button onclick="play()">Click to Animate</button> -->
+
+            <div id="botSpeech">I am ready to ask questions!</div>
+          </div>
+
+          <div class="mb-3">
+            <textarea id="question-text" rows="4" readonly></textarea>
+          </div>
+
+          <div class="controls">
+            <button class="btn btn-secondary" id="micToggle" clicked="false">
+              Mic On
+            </button>
+            <button
+              class="btn btn-info"
+              id="askquestion"
+              onclick="displayQuestion()"
+            >
+              Ask Question
+            </button>
+            <button
+              class="btn btn-info"
+              id="nextquestion"
+              onclick="nextQuestion()"
+            >
+              save&next
+            </button>
+            <button
+              class="btn btn-success"
+              onclick="submitTest()"
+              id="submittest"
+            >
+              Submit Test
+            </button>
+            <button class="btn btn-success" onclick="startTest()" id="start">
+              start Test
+            </button>
+          </div>
+        </div>
+        <div class="webcam-container">
+          <video id="webcam" autoplay playsinline></video>
+          <div class="timer">
+            <h4>Time Left: <span id="timer">30:00</span></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/questions.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+  </body>
+</html>

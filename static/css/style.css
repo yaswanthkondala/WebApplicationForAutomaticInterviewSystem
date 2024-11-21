@@ -1,0 +1,64 @@
+body {
+    background-color: #f7f9fc;
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+}
+
+.container-fluid {
+    padding: 20px;
+}
+
+.user-details {
+    
+    background-color: #e9ecef;
+    
+    border-radius: 8px ;
+    padding: 10px;
+}
+
+.panel-section {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.panelist {
+    
+    background-color: #007bff;
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+textarea {
+    resize: none;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+button {
+    flex-grow: 1;
+}
+
+.webcam-container {
+    position: relative;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    overflow: hidden;
+    height: 100px;
+    width: 200px;
+}
+
+#webcam {
+    width: 100%;
+    height: auto;
+}
+
+.timer {
+    margin-top: 10px;
+}
